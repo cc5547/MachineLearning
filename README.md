@@ -1,2 +1,2 @@
 # MachineLearning
-머싯는 머신러닝
+머신러닝 해보자고
