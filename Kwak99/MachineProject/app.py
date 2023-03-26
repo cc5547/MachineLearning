@@ -2,25 +2,25 @@ import streamlit as st
 
 from PIL import Image # 파이썬 기본라이브러리는 바로 사용 가능!
 import os
-def get_image(image_name):
-    image_path = f"{os.path.dirname(os.path.abspath(__file__))}/{image_name}"
-    image = Image.open(image_path) # 경로와 확장자 주의!
-    st.image(image)
+# def get_image(image_name):
+#     image_path = f"{os.path.dirname(os.path.abspath(__file__))}/{image_name}"
+#     image = Image.open(image_path) # 경로와 확장자 주의!
+#     st.image(image)
 
-get_image("salary.png") # https://www.canva.com/
+# get_image("salary.png") # https://www.canva.com/
 
-st.write(
-    """
-    # 코드 & 데이터
-    * [Colab 노트북](https://colab.research.google.com/drive/1QtzUzGmNxPJtUANkm7aQkD7j7WtdmqdE?usp=sharing)
-    * 사용한 데이터 (salary.csv)
-        * 출처 : https://www.kaggle.com/datasets/ayessa/salary-prediction-classification
-    * 실행 결과 : <https://qus0in-streamlit-example-05-decision-treeapp-g6z906.streamlit.app/>
-    """
-)
+# st.write(
+#     """
+#     # 코드 & 데이터
+#     * [Colab 노트북](https://colab.research.google.com/drive/1QtzUzGmNxPJtUANkm7aQkD7j7WtdmqdE?usp=sharing)
+#     * 사용한 데이터 (salary.csv)
+#         * 출처 : https://www.kaggle.com/datasets/ayessa/salary-prediction-classification
+#     * 실행 결과 : <https://qus0in-streamlit-example-05-decision-treeapp-g6z906.streamlit.app/>
+#     """
+# )
 
 import pandas as pd # 판다스 불러오기
-data_url = "https://raw.githubusercontent.com/bigdata-young/bigdata_16th/main/data/salary.csv"
+data_url = "https://github.com/KHB2937/MachineLearning/tree/main/Kwak99/MachineProject/project.csv"
 df = pd.read_csv(data_url) # URL로 CSV 불러오기
 
 st.write(df) # 자동으로 표 그려줌
@@ -33,7 +33,7 @@ with st.echo(code_location="below"):
     dir_path = f"{os.path.dirname(os.path.abspath(__file__))}"
     model_path = f"{dir_path}/model.pkl"
     model = joblib.load(model_path)
-    st.write("* Decision Tree 모델")
+    st.write("* 랜덤 포레스트 모델")
 
     import graphviz as graphviz
     from sklearn import tree
