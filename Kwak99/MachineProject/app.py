@@ -1,32 +1,66 @@
 import streamlit as st
 
-# 이미지를 첨부하여 업로드하려면...
 from PIL import Image # 파이썬 기본라이브러리는 바로 사용 가능!
 import os
-image_path = os.path.dirname(os.path.abspath(__file__)) + "/raccoon.jpeg"
-image = Image.open(image_path) # 경로와 확장자 주의!
+def get_image(image_name):
+    image_path = f"{os.path.dirname(os.path.abspath(__file__))}/{image_name}"
+    image = Image.open(image_path) # 경로와 확장자 주의!
+    st.image(image)
 
-# 메소드를 실행하는 순서대로 화면에 그려집니다!
-st.image(image)
-
-st.write(
-    """
-    # 필수항목만 넣은 페이지
-    ## 관련 문서
-    * [Streamlit 문서 보러가기](https://docs.streamlit.io/library/api-reference)
-    * [Markdown 사용법 보러가기](https://goddaehee.tistory.com/307)
-    """
-)
-
-# 이미지를 링크로 불러오려면...
-# 무료 이미지 호스팅 : https://imgur.com/
-st.image("https://i.imgur.com/Ke2LWJL.png")
+get_image("salary.png") # https://www.canva.com/
 
 st.write(
     """
-    ## 사용법
-    * 제공한 다른 예시들을 편집하고 각자 github에 올려보면서 익혀보세요
-    * 추가적으로 넣고 싶은 라이브러리는 `requirements.txt`에 넣어줘야 작동합니다
-    * 실행 결과 : <https://qus0in-streamlit-example-00-startapp-dmtm98.streamlit.app/>
+    # 코드 & 데이터
+    * [Colab 노트북](https://colab.research.google.com/drive/1QtzUzGmNxPJtUANkm7aQkD7j7WtdmqdE?usp=sharing)
+    * 사용한 데이터 (salary.csv)
+        * 출처 : https://www.kaggle.com/datasets/ayessa/salary-prediction-classification
+    * 실행 결과 : <https://qus0in-streamlit-example-05-decision-treeapp-g6z906.streamlit.app/>
     """
 )
+
+import pandas as pd # 판다스 불러오기
+data_url = "https://raw.githubusercontent.com/bigdata-young/bigdata_16th/main/data/salary.csv"
+df = pd.read_csv(data_url) # URL로 CSV 불러오기
+
+st.write(df) # 자동으로 표 그려줌
+# st.table(df) # 이걸로 그려도 됨
+
+st.write("# 모델 통해 예측해 보기")
+
+with st.echo(code_location="below"):
+    import joblib
+    dir_path = f"{os.path.dirname(os.path.abspath(__file__))}"
+    model_path = f"{dir_path}/model.pkl"
+    model = joblib.load(model_path)
+    st.write("* Decision Tree 모델")
+
+    import graphviz as graphviz
+    from sklearn import tree
+    plot_tree  = tree.export_graphviz(model, out_file=None, max_depth=3)
+    st.graphviz_chart(plot_tree)
+
+st.write("---")
+
+# 입력값을 변수로 받아서 사용 가능!
+
+with st.echo(code_location="below"):
+    # TODO: 다른 예시들을 활용하여 input을 직접 구성해보세요!
+
+    # 실행 버튼
+    play_button = st.button(
+        label="예측", # 버튼 내부 표시되는 이름
+    )
+
+st.write("---") # 구분선
+
+with st.echo(code_location="below"):
+    # 실행 버튼이 눌리면 모델을 불러와서 예측한다
+    if play_button: 
+        input_values = [
+
+        ]
+        # pred = model.predict(input_values)
+        # st.success("정상적으로 분석되었습니다!")
+        # st.write("## 분류")
+        # st.write(f"{'5만 달러 초과' if pred[0] == 1 else '5만 달러 이하'}")
